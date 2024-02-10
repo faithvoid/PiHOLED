@@ -1,0 +1,11 @@
+[Unit]
+Description=PiHOLED
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python /home/dietpi/PiHOLED.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
