@@ -21,6 +21,7 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 - Edit PiHOLED.py & replace <YOURAUTHTOKEN> with your the contents of "WEBPASSWORD" in "/etc/pihole/setupVars.con".
 - Copy the PiHOLED.service script to /lib/systemd/system
 - Type "systemctl enable PiHOLED && systemctl enable PiHOLED
+- (Optional) To flip the screen, change "flip_screen = False" to "flip_screen = True" in PiHOLED.py. 
 
 ## How to use with SSD1306-based HAT:
 - Open PiHOLED.py in Nano or a similar text editor
