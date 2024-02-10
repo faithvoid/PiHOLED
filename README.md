@@ -33,6 +33,7 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 ## TBD:
 - Add randomized 128-character inspirational quotes as the last line using "random" library.
 - Add joystick/button support + add shutdown/restart options.
+- Choose better font for increased visual clarity.
 
 ## Bugs:
 - TBA
