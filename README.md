@@ -10,6 +10,7 @@ PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi
 - luma.oled (pip)
 
 To install these on DietPi, install Python & RPi.GPIO via the DietPi Software installer & afterwards type "sudo apt install libopenjp2-7 && pip3 install psutil requests luma.oled" into your terminal. 
+
 For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 && pip3 install psutil requests luma.oled" instead, and modify the .service file to reflect your username.
 
 ## How to install:
