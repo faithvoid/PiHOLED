@@ -1,5 +1,7 @@
 # PiHOLED
-PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi hardware statistics on SH1106-based 1.3 inch (128x64) OLED display HATs (can be modified to run on SSD1306-based. 
+PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi hardware statistics on SH1106-based 1.3 inch (128x64) OLED display HATs (can be modified to run on SSD1306-based HATs.)
+
+![](PiHOLED.jpg?raw=true)
 
 ## Requirements:
 - python3
