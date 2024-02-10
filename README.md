@@ -16,5 +16,8 @@ PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi
 - "from luma.oled.device import sh1106" -> "from luma.oled.device import ssd1306"
 - device = sh1106(serial, width=WIDTH, height=HEIGHT)  -> "device = ssd1306(serial, width=WIDTH, height=HEIGHT)"
 
-- ## Bugs:
+## TBD:
+- Add randomized 128-character quotes at the end using "random" library.
+
+## Bugs:
 - TBA
