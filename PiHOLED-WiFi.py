@@ -25,7 +25,7 @@ flip_screen = False  # Set to True to flip the screen 180 degrees
 
 def get_network_info():
     try:
-        stats = psutil.net_if_addrs()['eth0']
+        stats = psutil.net_if_addrs()['wlan0']
         ip_address = [addr.address for addr in stats if addr.family == 2][0]
         return ip_address
     except:
