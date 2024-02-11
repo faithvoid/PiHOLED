@@ -40,6 +40,7 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 ## TBD:
 - Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
 - Add music section as third page (mostly done with spotifyd).
+- Allow user to play/pause/skip using KEY1, KEY2 and KEY3 in the music section.
 - Merge this project + RetroSTATS (mostly done, need a new Raspberry Pi Zero + HAT to test with)
 
 ## Bugs:
