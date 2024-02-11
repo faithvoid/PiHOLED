@@ -1,5 +1,5 @@
 # RetroPiHOLED
-RetroPiHOLED is a basic, no frills Python script to display Raspberry Pi, Network / PiHole, Spotify & RetroPie statistics on SH1106-based 1.3 inch (128x64) OLED display HATs, such as the Waveshare 1.3inch OLED Raspberry Pi HAT (can be modified to run on SSD1306-based HATs). Tested on a Raspberry Pi Zero W running DietPi but should theoretically work on any SBC + distro combination with a similar GPIO pinout. 
+RetroPiHOLED is a Python script to display Raspberry Pi, Network / PiHole, Spotify & RetroPie statistics on SH1106-based 1.3 inch (128x64) OLED display HATs, such as the Waveshare 1.3inch OLED Raspberry Pi HAT (can be modified to run on SSD1306-based HATs). Tested on a Raspberry Pi Zero W running DietPi but should theoretically work on any SBC + distro combination with a similar GPIO pinout. 
 
 Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY2 for 3 seconds, rotating between brightness settngs with KEY3, and switching between System / Network / Music / RetroPie using the joystick (left + right).
 
