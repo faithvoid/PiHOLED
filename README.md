@@ -23,12 +23,14 @@ To install these on DietPi, install Python & RPi.GPIO via the DietPi Software in
 For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 && pip3 install psutil requests luma.oled gpiozero" instead, and modify the .service file to reflect your username.
 
 ## How to install:
-- Download PiHOLED or PiHOLED-WiFi (depending on whether you're using a wired or wireless connection)
-- Copy the corresponding PiHOLED.py to your /home/dietpi directory
+- Download PiHOLED.py
+- Copy PiHOLED.py to your /home/dietpi directory
 - Edit PiHOLED.py & replace <YOURAUTHTOKEN> with your the contents of "WEBPASSWORD" in "/etc/pihole/setupVars.con".
 - Copy the PiHOLED.service script to /lib/systemd/system
 - Type "systemctl enable PiHOLED && systemctl start PiHOLED"
-- (Optional) To flip the screen, change "rotate=2" to "rotate=0" or vice versa in PiHOLED.py. 
+
+## Configuration:
+- Rotate Screen: You can rotate the screen 180 degrees by finding "rotate=2" and changing it to "rotate=0" (or vice versa).
 
 ## How to use with SSD1306-based HAT:
 - Open PiHOLED.py in Nano or a similar text editor
