@@ -5,7 +5,7 @@ Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY
 
 ![](1.jpg)
 ![](2.jpg)
-<p align="center"><i> An aesthetically modified build of PiHOLED. </i> </p>
+<p align="center"><i> An aesthetically modified build of PiHOLED using the supErphoniX2 font. </i> </p>
 
 ## Requirements:
 - SPI + I2C enabled in DietPi/Raspbian (or similar distro)
