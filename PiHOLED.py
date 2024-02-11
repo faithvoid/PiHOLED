@@ -58,6 +58,7 @@ def get_queries_info():
 
 def display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_queries):
     with canvas(device) as draw:
+        draw.rectangle((0, 0, WIDTH - 1, HEIGHT - 1), outline=255)
         draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
         draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
         draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
