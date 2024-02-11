@@ -22,6 +22,9 @@ device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)  # Change to ssd13
 # Load font
 font = ImageFont.load_default()
 
+# Uncomment the line below if you'd like to load a custom font.
+# custom_font = ImageFont.truetype("path/to/font.ttf", size=12)
+
 # Button GPIO pins
 BUTTON1_PIN = 21  # GPIO pin for KEY1
 BUTTON2_PIN = 20  # GPIO pin for KEY2
