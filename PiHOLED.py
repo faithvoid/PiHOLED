@@ -6,43 +6,55 @@ from luma.oled.device import sh1106
 from luma.core.render import canvas
 from PIL import ImageFont
 from gpiozero import Button
-from signal import pause
+from threading import Thread
 
 # Constants
 WIDTH = 128
 HEIGHT = 64
 
 # Pi-hole API endpoint
-PIHOLE_API_URL = "http://127.0.0.1/admin/api.php?summaryRaw&auth=<AUTHTOKENHERE>"
+PIHOLE_API_URL = "http://127.0.0.1/admin/api.php?summaryRaw&auth=<YOURAUTHTOKEN>"
 
 # Initialize the OLED device with SPI interface
 serial = spi(device=0, port=0)  # Adjust the device and port numbers as needed
-device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)  # Change to ssd1306 if you're using an SSD1306 display, change rotate between 0 & 2 to rotate 180 degrees.
+device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)  # Change to ssd1306 if you're using an SSD1306 display, and change rotate=2 to rotate=0 (or vice versa) to flip the display.
 
 # Load font
 font = ImageFont.load_default()
-
-# Uncomment the line below if you'd like to load a custom font.
-# custom_font = ImageFont.truetype("path/to/font.ttf", size=12)
 
 # Button GPIO pins
 BUTTON1_PIN = 21  # GPIO pin for KEY1
 BUTTON2_PIN = 20  # GPIO pin for KEY2
 BUTTON3_PIN = 16  # GPIO pin for KEY3
 
-# Button objects, switch button1_pin & button3_pin if rotating display.
-button1 = Button(BUTTON1_PIN, hold_time=3) # Restarts the Raspberry Pi.
-button2 = Button(BUTTON2_PIN, hold_time=3) # Shuts down the Raspberry Pi.
-button3 = Button(BUTTON3_PIN) # Adjusts display brightness 
+# Joystick GPIO pins
+#JOYSTICK_UP_PIN = 6
+#JOYSTICK_DOWN_PIN = 19
+JOYSTICK_LEFT_PIN = 5
+JOYSTICK_RIGHT_PIN = 26
+#JOYSTICK_PRESS_PIN = 13
+
+# Button objects
+button1 = Button(BUTTON1_PIN, hold_time=3)
+button2 = Button(BUTTON2_PIN, hold_time=3)
+button3 = Button(BUTTON3_PIN)
+
+# Joystick objects
+joystick_left = Button(JOYSTICK_LEFT_PIN, hold_time=0)
+joystick_right = Button(JOYSTICK_RIGHT_PIN, hold_time=0)
 
 # Brightness levels
 brightness_levels = [0.1, 0.5, 1.0]  # Low, medium, high
 current_brightness_index = 0
 
-# Change "eth0" to "wlan0" (or your respective wireless card ID) if using a wireless network. 
+# Menu states
+STATS_MENU = 0
+NETWORK_MENU = 1
+current_menu_state = STATS_MENU
+
 def get_network_info():
     try:
-        stats = psutil.net_if_addrs()['eth0']
+        stats = psutil.net_if_addrs()['wlan0']
         ip_address = [addr.address for addr in stats if addr.family == 2][0]
         return ip_address
     except:
@@ -60,21 +72,27 @@ def get_queries_info():
         print(f"Error fetching queries info: {e}")
         return "N/A", "N/A"
 
-def display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_queries):
+def display_info(cpu_usage, ram_usage, sd_usage):
     with canvas(device) as draw:
-        draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
+        draw.text((0, 0), f"- PiHole | SYSTEM -", font=font, fill=255)
         draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
         draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
-        draw.text((0, 30), f"Total Queries: {total_queries}", font=font, fill=255)
-        draw.text((0, 40), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
+        draw.text((0, 30), f"Storage: {sd_usage}%", font=font, fill=255)
+
+def display_network_info(ip_address, sent, recv, blocked_queries, total_queries):
+    with canvas(device) as draw:
+        draw.text((0, 0), f"- PiHole | NETWORK -", font=font, fill=255)
+        draw.text((0, 10), f"IP: {ip_address}", font=font, fill=255)
+        draw.text((0, 20), f"Sent: {sent} kB/s", font=font, fill=255)
+        draw.text((0, 30), f"Recv: {recv} kB/s", font=font, fill=255)
+        draw.text((0, 40), f"Queries: {total_queries}", font=font, fill=255)
+        draw.text((0, 50), f"Blocked: {blocked_queries}", font=font, fill=255)
+
 
 def handle_brightness_cycle():
     global current_brightness_index
     current_brightness_index = (current_brightness_index + 1) % len(brightness_levels)
     device.contrast(int(255 * brightness_levels[current_brightness_index]))
-
-def handle_button1_press():
-    print("Button 1 pressed")
 
 def handle_button1_hold():
     print("Button 1 held for 3 seconds")
@@ -85,13 +103,10 @@ def handle_button1_hold():
     import os
     os.system("sudo reboot")
 
-def handle_button2_press():
-    print("Button 2 pressed")
-
 def handle_button2_hold():
     print("Button 2 held for 3 seconds")
     # Shutdown the Raspberry Pi
-    print("Shutting down.")
+    print("Shutting down...")
     time.sleep(1)  # Add a small delay before shutting down to allow time for the message to be displayed
     device.cleanup()
     import os
@@ -101,26 +116,43 @@ def handle_button3_press():
     print("Button 3 pressed")
     handle_brightness_cycle()
 
-# Assign button press and hold handlers
-button1.when_pressed = handle_button1_press
+def handle_joystick_left():
+    global current_menu_state
+    current_menu_state -= 1
+    if current_menu_state < 0:
+        current_menu_state = 1  # Wrap around to the last menu state
+
+def handle_joystick_right():
+    global current_menu_state
+    current_menu_state += 1
+    if current_menu_state > 1:
+        current_menu_state = 0  # Wrap around to the first menu state
+        
+# Assign button and joystick handlers
 button1.when_held = handle_button1_hold
-
-button2.when_pressed = handle_button2_press
 button2.when_held = handle_button2_hold
-
 button3.when_pressed = handle_button3_press
+joystick_left.when_pressed = handle_joystick_left
+joystick_right.when_pressed = handle_joystick_right
 
 def main():
-    try:
-        while True:
-            ip_address = get_network_info()
-            cpu_usage = psutil.cpu_percent()
-            ram_usage = psutil.virtual_memory().percent
-            blocked_queries, total_queries = get_queries_info()
-            display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_queries)
-            time.sleep(5)  # Refresh every 5 seconds
-    except KeyboardInterrupt:
-        pass
+    while True:
+        ip_address = get_network_info()
+        cpu_usage = psutil.cpu_percent()
+        ram_usage = psutil.virtual_memory().percent
+        sd_usage = psutil.disk_usage('/').percent  # Get storage usage percentage
+        blocked_queries, total_queries = get_queries_info()
+
+        if current_menu_state == STATS_MENU:
+            display_info(cpu_usage, ram_usage, sd_usage)
+        elif current_menu_state == NETWORK_MENU:
+            # Get network stats
+            network_info = psutil.net_io_counters()
+            sent = round(network_info.bytes_sent / 1024, 2)  # Convert bytes to KB
+            recv = round(network_info.bytes_recv / 1024, 2)  # Convert bytes to KB
+            display_network_info(ip_address, sent, recv, blocked_queries, total_queries)
+
+        time.sleep(5)  # Refresh every 5 seconds
 
 if __name__ == "__main__":
     main()
