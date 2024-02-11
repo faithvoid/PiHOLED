@@ -5,23 +5,36 @@ from luma.core.interface.serial import spi
 from luma.oled.device import sh1106
 from luma.core.render import canvas
 from PIL import ImageFont
+from gpiozero import Button
+from signal import pause
 
 # Constants
 WIDTH = 128
 HEIGHT = 64
 
 # Pi-hole API endpoint
-PIHOLE_API_URL = "http://127.0.0.1/admin/api.php?summaryRaw&auth=<YOURAUTHTOKENHERE>"
+PIHOLE_API_URL = "http://127.0.0.1/admin/api.php?summaryRaw&auth=<AUTHTOKENHERE>"
 
 # Initialize the OLED device with SPI interface
 serial = spi(device=0, port=0)  # Adjust the device and port numbers as needed
-device = sh1106(serial, width=WIDTH, height=HEIGHT)  # Change to ssd1306 if you're using an SSD1306 display
+device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)  # Change to ssd1306 if you're using an SSD1306 display, change rotate between 0 & 2 to rotate 180 degrees.
 
 # Load font
 font = ImageFont.load_default()
 
-# Configuration
-flip_screen = False  # Set to True to flip the screen 180 degrees
+# Button GPIO pins
+BUTTON1_PIN = 21  # GPIO pin for KEY1
+BUTTON2_PIN = 20  # GPIO pin for KEY2
+BUTTON3_PIN = 16  # GPIO pin for KEY3
+
+# Button objects, switch button1_pin & button3_pin if rotating display.
+button1 = Button(BUTTON1_PIN, hold_time=3) # Restarts the Raspberry Pi.
+button2 = Button(BUTTON2_PIN, hold_time=3) # Shuts down the Raspberry Pi.
+button3 = Button(BUTTON3_PIN) # Adjusts display brightness 
+
+# Brightness levels
+brightness_levels = [0.1, 0.5, 1.0]  # Low, medium, high
+current_brightness_index = 0
 
 def get_network_info():
     try:
@@ -45,19 +58,53 @@ def get_queries_info():
 
 def display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_queries):
     with canvas(device) as draw:
-        if flip_screen:
-            # Draw text flipped 180 degrees
-            draw.text((WIDTH-1, HEIGHT-1), f"IP: {ip_address}", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-11), f"CPU: {cpu_usage}%", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-21), f"RAM: {ram_usage}%", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-31), f"Total Queries: {total_queries}", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-41), f"Blocked Queries: {blocked_queries}", font=font, fill=255, anchor="rd")
-        else:
-            draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
-            draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
-            draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
-            draw.text((0, 30), f"Total Queries: {total_queries}", font=font, fill=255)
-            draw.text((0, 40), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
+        draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
+        draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
+        draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
+        draw.text((0, 30), f"Total Queries: {total_queries}", font=font, fill=255)
+        draw.text((0, 4c0), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
+
+def handle_brightness_cycle():
+    global current_brightness_index
+    current_brightness_index = (current_brightness_index + 1) % len(brightness_levels)
+    device.contrast(int(255 * brightness_levels[current_brightness_index]))
+
+def handle_button1_press():
+    print("Button 1 pressed")
+
+def handle_button1_hold():
+    print("Button 1 held for 3 seconds")
+    # Restart the Raspberry Pi
+    print("Restarting!")
+    time.sleep(1)  # Add a small delay before restarting to allow time for the message to be displayed
+    device.cleanup()
+    import os
+    os.system("sudo reboot")
+
+def handle_button2_press():
+    print("Button 2 pressed")
+
+def handle_button2_hold():
+    print("Button 2 held for 3 seconds")
+    # Shutdown the Raspberry Pi
+    print("Shutting down.")
+    time.sleep(1)  # Add a small delay before shutting down to allow time for the message to be displayed
+    device.cleanup()
+    import os
+    os.system("sudo shutdown now")
+
+def handle_button3_press():
+    print("Button 3 pressed")
+    handle_brightness_cycle()
+
+# Assign button press and hold handlers
+button1.when_pressed = handle_button1_press
+button1.when_held = handle_button1_hold
+
+button2.when_pressed = handle_button2_press
+button2.when_held = handle_button2_hold
+
+button3.when_pressed = handle_button3_press
 
 def main():
     try:
@@ -73,3 +120,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+pause()  # Keep the script running to handle button events
