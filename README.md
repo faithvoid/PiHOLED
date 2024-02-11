@@ -18,7 +18,7 @@ Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY
 
 To install these on DietPi, install Python & RPi.GPIO via the DietPi Software installer & afterwards type "sudo apt install libopenjp2-7 && pip3 install psutil requests luma.oled" into your terminal. 
 
-For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 && pip3 install psutil requests luma.oled" instead, and modify the .service file to reflect your username.
+For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 && pip3 install psutil requests luma.oled gpiozero" instead, and modify the .service file to reflect your username.
 
 ## How to install:
 - Download PiHOLED or PiHOLED-WiFi (depending on whether you're using a wired or wireless connection)
@@ -39,3 +39,5 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 
 ## Bugs:
 - TBA
+
+Any and all feedback (optimizations, etc) is appreciated! Although feature requests will most likely be ignored as the scope of this project (basic PiHole + Pi statistics) has largely been covered already.
