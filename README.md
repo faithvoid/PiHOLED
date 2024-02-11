@@ -37,7 +37,9 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 - "device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)"  -> "device = ssd1306(serial, width=WIDTH, height=HEIGHT, rotate=2)"
 
 ## TBD:
-- Choose better font for increased visual clarity.
+- Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
+- Add music section as third page
+- Merge this project + RetroSTATS (RetroPie stats can be page 4?)
 
 ## Bugs:
 - TBA
