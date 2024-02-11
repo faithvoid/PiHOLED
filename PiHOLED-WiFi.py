@@ -48,14 +48,14 @@ def display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_querie
         if flip_screen:
             # Draw text flipped 180 degrees
             draw.text((WIDTH-1, HEIGHT-1), f"IP: {ip_address}", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-11), f"CPU %: {cpu_usage}%", font=font, fill=255, anchor="rd")
-            draw.text((WIDTH-1, HEIGHT-21), f"RAM %: {ram_usage}%", font=font, fill=255, anchor="rd")
+            draw.text((WIDTH-1, HEIGHT-11), f"CPU: {cpu_usage}%", font=font, fill=255, anchor="rd")
+            draw.text((WIDTH-1, HEIGHT-21), f"RAM: {ram_usage}%", font=font, fill=255, anchor="rd")
             draw.text((WIDTH-1, HEIGHT-31), f"Total Queries: {total_queries}", font=font, fill=255, anchor="rd")
             draw.text((WIDTH-1, HEIGHT-41), f"Blocked Queries: {blocked_queries}", font=font, fill=255, anchor="rd")
         else:
             draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
-            draw.text((0, 10), f"CPU %: {cpu_usage}%", font=font, fill=255)
-            draw.text((0, 20), f"RAM %: {ram_usage}%", font=font, fill=255)
+            draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
+            draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
             draw.text((0, 30), f"Total Queries: {total_queries}", font=font, fill=255)
             draw.text((0, 40), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
 
