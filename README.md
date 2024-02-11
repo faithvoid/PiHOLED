@@ -13,6 +13,8 @@ Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY
 - psutil (pip)
 - requests (pip)
 - luma.oled (pip)
+- gpiozero (pip)
+
 
 To install these on DietPi, install Python & RPi.GPIO via the DietPi Software installer & afterwards type "sudo apt install libopenjp2-7 && pip3 install psutil requests luma.oled" into your terminal. 
 
