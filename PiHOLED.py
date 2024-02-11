@@ -60,11 +60,11 @@ def get_queries_info():
 def display_info(ip_address, cpu_usage, ram_usage, blocked_queries, total_queries):
     with canvas(device) as draw:
         draw.rectangle((0, 0, WIDTH - 1, HEIGHT - 1), outline=255)
-        draw.text((0, 0), f"IP: {ip_address}", font=font, fill=255)
-        draw.text((0, 10), f"CPU: {cpu_usage}%", font=font, fill=255)
-        draw.text((0, 20), f"RAM: {ram_usage}%", font=font, fill=255)
-        draw.text((0, 30), f"Total Queries: {total_queries}", font=font, fill=255)
-        draw.text((0, 4c0), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
+        draw.text((2, 2), f"IP: {ip_address}", font=font, fill=255)
+        draw.text((2, 12), f"CPU: {cpu_usage}%", font=font, fill=255)
+        draw.text((2, 22), f"RAM: {ram_usage}%", font=font, fill=255)
+        draw.text((2, 32), f"Total Queries: {total_queries}", font=font, fill=255)
+        draw.text((2, 42), f"Blocked Queries: {blocked_queries}", font=font, fill=255)
 
 def handle_brightness_cycle():
     global current_brightness_index
