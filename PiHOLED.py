@@ -36,6 +36,7 @@ button3 = Button(BUTTON3_PIN) # Adjusts display brightness
 brightness_levels = [0.1, 0.5, 1.0]  # Low, medium, high
 current_brightness_index = 0
 
+# Change "eth0" to "wlan0" (or your respective wireless card ID) if using a wireless network. 
 def get_network_info():
     try:
         stats = psutil.net_if_addrs()['eth0']
