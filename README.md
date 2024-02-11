@@ -3,7 +3,8 @@ PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi
 
 Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY2 for 3 seconds, rotating between brightness settngs with KEY3, and switching between system / network statistics using the joystick (left + right).
 
-![](PiHOLED.jpg?raw=true)
+![](1.jpg)
+![](2.jpg)
 
 ## Requirements:
 - SPI + I2C enabled in DietPi/Raspbian (or similar distro)
