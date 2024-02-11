@@ -1,7 +1,7 @@
-# PiHOLED
-PiHOLED is a basic, no frills Python script to display PiHole &amp; Raspberry Pi hardware statistics on SH1106-based 1.3 inch (128x64) OLED display HATs, such as the Waveshare 1.3inch OLED Raspberry Pi HAT (can be modified to run on SSD1306-based HATs). Tested on a Raspberry Pi Zero W running DietPi but should theoretically work on any SBC + distro combination with a similar GPIO pinout. 
+# RetroPiHOLED
+RetroPiHOLED is a basic, no frills Python script to display Raspberry Pi, Network / PiHole, Spotify & RetroPie statistics on SH1106-based 1.3 inch (128x64) OLED display HATs, such as the Waveshare 1.3inch OLED Raspberry Pi HAT (can be modified to run on SSD1306-based HATs). Tested on a Raspberry Pi Zero W running DietPi but should theoretically work on any SBC + distro combination with a similar GPIO pinout. 
 
-Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY2 for 3 seconds, rotating between brightness settngs with KEY3, and switching between system / network statistics using the joystick (left + right).
+Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY2 for 3 seconds, rotating between brightness settngs with KEY3, and switching between System / Network / Music / RetroPie using the joystick (left + right).
 
 ![](1.jpg)
 ![](2.jpg)
@@ -16,7 +16,6 @@ Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY
 - requests (pip)
 - luma.oled (pip)
 - gpiozero (pip)
-
 
 To install these on DietPi, install Python & RPi.GPIO via the DietPi Software installer & afterwards type "sudo apt install libopenjp2-7 && pip3 install psutil requests luma.oled" into your terminal. 
 
@@ -40,8 +39,8 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 
 ## TBD:
 - Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
-- Add music section as third page
-- Merge this project + RetroSTATS (RetroPie stats can be page 4?)
+- Add music section as third page (mostly done with spotifyd).
+- Merge this project + RetroSTATS (mostly done, need a new Raspberry Pi Zero + HAT to test with)
 
 ## Bugs:
 - TBA
