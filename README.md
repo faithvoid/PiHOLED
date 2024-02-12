@@ -33,14 +33,12 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 
 ## How to use with SSD1306-based HAT:
 - Open PiHOLED.py in Nano or a similar text editor
-- Change these two lines to the following:
-- "from luma.oled.device import sh1106" -> "from luma.oled.device import ssd1306"
-- "device = sh1106(serial, width=WIDTH, height=HEIGHT, rotate=2)"  -> "device = ssd1306(serial, width=WIDTH, height=HEIGHT, rotate=2)"
+- Change any instance of "sh1106" to "ssd1306"
 
 ## TBD:
 - Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
 - 
 ## Bugs:
-- TBA
+- CPU usage spikes by about 10% when screen refreshes, seemingly fine if you're just running PiHole but any headroom lost is still headroom lost. 
 
 Any and all feedback (optimizations, etc) is appreciated! Although feature requests will most likely be ignored as the scope of this project (basic PiHole + Pi statistics) has largely been covered already.
