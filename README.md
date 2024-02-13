@@ -37,7 +37,6 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 
 ## TBD:
 - Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
-- 
 ## Bugs:
 - CPU usage spikes by about 10% when screen refreshes, seemingly fine if you're just running PiHole but any headroom lost is still headroom lost. 
 
