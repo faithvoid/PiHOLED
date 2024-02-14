@@ -37,7 +37,9 @@ For non-DietPi users, type "sudo apt install python3 python3-pip libopenjp2-7 &&
 
 ## TBD:
 - Choose better font for increased visual clarity. (supErphoniX2 works great at size 9 but it's not open-source).
+- Add an option to cycle between menu states automatically (for SH1106/SSD1306 LCDs without physical controls).
+- Further optimize CPU usage
 ## Bugs:
-- CPU usage spikes by about 10% when screen refreshes, seemingly fine if you're just running PiHole but any headroom lost is still headroom lost. 
+- CPU usage spikes by about 10% when screen refreshes, seemingly fine if you're just running PiHole but any headroom lost is still headroom lost. As far as I can tell from testing other similar Python scripts, this amount of CPU usage is about expected, but I would love to be shown otherwise.
 
 Any and all feedback (optimizations, etc) is appreciated! Although feature requests will most likely be ignored as the scope of this project (basic PiHole + Pi statistics) has largely been covered already.
