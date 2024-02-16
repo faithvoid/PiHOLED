@@ -7,6 +7,19 @@ Supports safe reboot by holding KEY1 for 3 seconds, safe shutdown by holding KEY
 ![](2.jpg)
 <p align="center"><i> An aesthetically modified build of PiHOLED using the supErphoniX2 font. </i> </p>
 
+## Features:
+### Menus:
+- Hardware - Shows your CPU, RAM and storage.
+- Network - Shows your IP address, sent/received packets, and both total and blocked queries from PiHole.
+- Music - Shows your currently playing Spotify track! (WIP)
+- Games - Shows your current running emulator/core, system name & game name! (WIP)
+
+### Buttons:
+KEY1 - Hold for 3 seconds to safely reboot.
+KEY2 - Hold for 3 seconds to shutdown.
+KEY3 - Press to cycle LCD brightness, hold mapping isn't set (yet) but you can modify the code to easily use it for whatever!
+Joystick - L/R switches between menu pages, U/D does nothing (yet?)
+
 ## Requirements:
 - SPI + I2C enabled in DietPi/Raspbian (or similar distro)
 - python3
